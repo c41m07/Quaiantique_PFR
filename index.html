@@ -1,25 +1,32 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
-    <link href="scss/main.css" rel="stylesheet">
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <link href="scss/main.css" rel="stylesheet"/>
     <title>Quai Antique</title>
 </head>
-<body>
-
+<body class="layout">
 <!--    header  -->
 <header>
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Quai Antique</a>
-            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                    class="navbar-toggler" data-bs-target="#navbarSupportedContent"
-                    data-bs-toggle="collapse" type="button">
+            <button
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-bs-target="#navbarSupportedContent"
+                    data-bs-toggle="collapse"
+                    type="button"
+            >
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -31,13 +38,13 @@
                         <a class="nav-link" href="/galerie">Galerie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">La carte</a>
+                        <a class="nav-link" href="/menu">La carte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Les réservations</a>
+                        <a class="nav-link" href="/reservation">Les réservations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mon compte</a>
+                        <a class="nav-link" href="/account">Mon compte</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/signin">Connexion/Deconnexion</a>
@@ -49,7 +56,7 @@
 </header>
 
 <!-- contenue du site    -->
-<main id="main-page">
+<main class="content" id="main-page">
     <!--le contenue du site-->
 </main>
 
@@ -61,7 +68,8 @@
             <p>Du mardi au dimanche 12:00-14:00 18:00-23:00</p>
         </div>
         <div class="col-6 col-lg-4">
-            <p>Quai Antique <br/>
+            <p>
+                Quai Antique <br/>
                 5 rue de la route <br/>
                 31150 Ville <br/>
                 04 01 01 01 01 <br/>
@@ -75,6 +83,5 @@
 
 <script src="./Router/Router.js" type="module"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
