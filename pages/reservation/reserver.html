@@ -1,0 +1,104 @@
+<div class="hero-scene text-center text-white">
+    <div class="hero-scene-content">
+        <h1>Mon compte</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form class="col-12  col-md-8 mx-auto">
+        <div class="row row-gap-4">
+            <div class="col-12 ">
+                <label class="form-label" for="NomInput">Nom</label>
+                <input
+                        class="form-control"
+                        disabled
+                        id="NomInput"
+                        name="Nom"
+                        placeholder="Votre nom"
+                        type="text"
+                        value="John"
+                />
+            </div>
+            <div class="col-12 ">
+                <label class="form-label" for="PrenomInput">Prénom</label>
+                <input
+                        class="form-control"
+                        disabled
+                        id="PrenomInput"
+                        name="Prenom"
+                        placeholder="Votre prénom"
+                        type="text"
+                        value="Doe"
+                />
+            </div>
+            <div class="col-12 ">
+                <label class="form-label" for="AllergieInput">Allergies</label>
+                <input
+                        class="form-control"
+                        id="AllergieInput"
+                        name="Allergies"
+                        placeholder="Vos allergies (fruits de mer, arachides…)"
+                        type="text"
+                        value="Cacahouetes"
+                />
+            </div>
+            <div class="col-12 ">
+                <label class="form-label" for="NbConvivesInput">
+                    Nombres de convives habituel
+                </label>
+                <input
+                        class="form-control"
+                        id="NbConvivesInput"
+                        name="NbConvives"
+                        placeholder="Combien vous êtes habituellement ?"
+                        type="number"
+                        value="4"
+                />
+            </div>
+            <div class="col-12 ">
+                <label class="form-label" for="Dateinput">
+                    Date de réservation
+                </label>
+                <input
+                        class="form-control"
+                        id="Dateinput"
+                        name="Date"
+                        placeholder=""
+                        type="date"
+                />
+            </div>
+            <div class="col-6 ">
+                <p>Service</p>
+                <div class="form-check">
+                    <input class="form-check-input" id="midiRadio" name="serviceChoisi" type="radio">
+                    <label class="form-check-label" for="midiRadio">
+                        Midi
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input checked class="form-check-input" id="soirRadio" name="serviceChoisi" type="radio">
+                    <label class="form-check-label" for="soirRadio">
+                        Soir
+                    </label>
+                </div>
+            </div>
+            <div class="col-6 ">
+                <label class="form-label" for="selectHour">Heure</label>
+                <select class="form-select" id="selectHour" name="Heure">
+                    <option>19:30</option>
+                    <option>19:45</option>
+                    <option>20:00</option>
+                    <option>20:15</option>
+                    <option>20:30</option>
+                    <option>20:45</option>
+                    <option>21:00</option>
+                </select>
+            </div>
+            <div class="text-center my-4">
+                <a class="btn btn-secondary" href="/reservation">Annulé</a>
+                <button class="btn btn-primary" type="button">Réserver</button>
+            </div>
+        </div>
+
+    </form>
+</div>
