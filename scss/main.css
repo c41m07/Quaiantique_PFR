@@ -11860,6 +11860,22 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+html {
+  font-size: 16px; /* base */
+}
+
+img {
+  max-width: 600px;
+  max-height: 300px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.bg-center-position {
+  object-position: center -50px;
+}
+
 .big-title-scene {
   position: relative;
 }
@@ -11889,6 +11905,63 @@ textarea.form-control-lg {
 
 .text-justify {
   text-align: justify;
+}
+
+.image-card {
+  position: relative;
+}
+.image-card img {
+  width: 300px;
+  height: 300px;
+  display: block;
+}
+.image-card:hover .titre-image {
+  opacity: 1;
+}
+.image-card:hover img {
+  filter: brightness(0.3);
+}
+.image-card img {
+  transition: all 0.3s;
+}
+.image-card .titre-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+/* Petit mobile (– 480px) */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+/* Mobile moyen (481–768px) */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+/* Tablette (768–1024px) */
+@media (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+/* Desktop (1025–1440px) */
+@media (max-width: 1440px) {
+  html {
+    font-size: 17px;
+  }
+}
+/* Grand écran (+ 1440px) */
+@media (min-width: 1441px) {
+  html {
+    font-size: 18px;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

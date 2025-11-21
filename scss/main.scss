@@ -1,8 +1,25 @@
 @import url("/node_modules/bootstrap-icons/font/bootstrap-icons.css");
 @import "custom";
 
-.big-title-scene{
+html {
+  font-size: 16px; /* base */
+}
+
+img {
+  max-width: 600px;
+  max-height: 300px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.bg-center-position {
+  object-position: center -50px;
+}
+
+.big-title-scene {
   position: relative;
+
   &::before {
     content: "";
     position: absolute;
@@ -15,10 +32,11 @@
     background-position: center -500px;
     filter: brightness(0.3);
   }
-*{
-  //positionne les élément devant le before
-  position: relative;
-}
+
+  * {
+    //positionne les élément devant le before
+    position: relative;
+  }
 }
 
 .big-title-content {
@@ -31,4 +49,72 @@
 
 .text-justify {
   text-align: justify;
+}
+
+.image-card {
+  position: relative;
+img {
+    width: 300px;
+    height: 300px;
+    display: block;
+  }
+
+  &:hover {
+    .titre-image {
+      opacity: 1;
+    }
+
+    img {
+      filter: brightness(0.3);
+    }
+  }
+
+  img {
+    transition: all 0.3s;
+  }
+
+  .titre-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+}
+
+//média
+/* Petit mobile (– 480px) */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* Mobile moyen (481–768px) */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* Tablette (768–1024px) */
+@media (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Desktop (1025–1440px) */
+@media (max-width: 1440px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+/* Grand écran (+ 1440px) */
+@media (min-width: 1441px) {
+  html {
+    font-size: 18px;
+  }
 }
