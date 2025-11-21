@@ -1,2 +1,29 @@
 @import url("/node_modules/bootstrap-icons/font/bootstrap-icons.css");
 @import "custom";
+
+.big-title-scene{
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../image/bigtitleimg.jpg");
+    background-size: cover;
+    background-position: center -500px;
+    filter: brightness(0.3);
+  }
+*{
+  //positionne les élément devant le before
+  position: relative;
+}
+}
+.big-title-content {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
