@@ -23,6 +23,7 @@ export const allRoutes = [
     "édité vos réservation",
     "pages/reservation/reserver.html",
   ),
+  new Route("/menu", "notre menu", "/pages/carte.html"),
 ];
 
 //Le titre s'affiche comme ceci : Route.titre - websitename
