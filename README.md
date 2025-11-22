@@ -114,8 +114,8 @@ Déploiement & infra
 7) TODO court (liste actionable à cocher)
 
 - Front (priorité) :
-    - [ ] Auth dans le routage
-    - [ ] Ajouter loader global
+    - [x] Auth dans le routage
+    - [x] Ajouter loader global
     - [ ] Valider tous les formulaires
     - [ ] Implémenter modale confirmation annulation réservation
     - [ ] Créer page gestion carte (UI)
