@@ -41,6 +41,9 @@
                         placeholder="test@mail.fr"
                         type="email"
                 />
+                <div class="invalid-feedback">
+                    Le mail ou le mot de passe est incorrect.
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="PasswordInput">Mot de passe</label>
@@ -50,9 +53,12 @@
                         name="Password"
                         type="password"
                 />
+                <div class="invalid-feedback">
+                    Le mail ou le mot de passe est incorrect.
+                </div>
             </div>
             <div class="col-md-12 text-center">
-                <button class="btn btn-primary" type="submit">Connexion</button>
+                <button class="btn btn-primary" id="btnSignIn" type="button">Connexion</button>
             </div>
         </div>
     </form>

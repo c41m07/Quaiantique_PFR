@@ -9,30 +9,68 @@ const getRouteByUrl = (url) => {
   let currentRoute = null;
   // Parcours de toutes les routes pour trouver la correspondance
   allRoutes.forEach((element) => {
-    if (element.url == url) {
+    if (element.url === url) {
       currentRoute = element;
     }
   });
   // Si aucune correspondance n'est trouvée, on retourne la route 404
-  if (currentRoute != null) {
+  if (currentRoute !== null) {
     return currentRoute;
   } else {
     return route404;
   }
 };
 
+// Affiche le loader global (doit exister dans index.html)
+function showLoader() {
+  const loader = document.getElementById("site-loader");
+  if (loader) loader.classList.remove("d-none");
+}
+
+function hideLoader() {
+  const loader = document.getElementById("site-loader");
+  if (loader) loader.classList.add("d-none");
+}
+
 // Fonction pour charger le contenu de la page
 const LoadContentPage = async () => {
+  showLoader();
   const path = window.location.pathname;
   // Récupération de l'URL actuelle
   const actualRoute = getRouteByUrl(path);
-  // Récupération du contenu HTML de la route
-  const html = await fetch(actualRoute.pathHtml).then((data) => data.text());
-  // Ajout du contenu HTML à l'élément avec l'ID "main-page"
-  document.getElementById("main-page").innerHTML = html;
+
+  // Vérifier l'autorisation si nécessaire
+  if (actualRoute.requiresAuth) {
+    // fonctions isConnected() et getRole() doivent être définies globalement (js/scripts.js)
+    if (typeof isConnected === "function") {
+      if (!isConnected()) {
+        // rediriger vers signin
+        window.history.pushState({}, "", "/signin");
+        hideLoader();
+        return LoadContentPage();
+      }
+    }
+    if (
+      actualRoute.roles &&
+      actualRoute.roles.length > 0 &&
+      typeof getRole === "function"
+    ) {
+      const role = getRole();
+      if (!role || !actualRoute.roles.includes(role)) {
+        window.history.pushState({}, "", "/signin");
+        hideLoader();
+        return LoadContentPage();
+      }
+    }
+  }
+
+  // Récupération du contenu HTML de la route et injection
+  document.getElementById("main-page").innerHTML = await fetch(
+    actualRoute.pathHtml,
+  ).then((data) => data.text());
 
   // Ajout du contenu JavaScript
-  if (actualRoute.pathJS != "") {
+  if (actualRoute.pathJS !== "") {
     // Création d'une balise script
     var scriptTag = document.createElement("script");
     scriptTag.setAttribute("type", "text/javascript");
@@ -44,6 +82,12 @@ const LoadContentPage = async () => {
 
   // Changement du titre de la page
   document.title = actualRoute.title + " - " + websiteName;
+
+  //Show & Hide
+  showAndHideElementForRole();
+
+  // Masquer le loader une fois que l'affichage est prêt
+  hideLoader();
 };
 
 // Fonction pour gérer les événements de routage (clic sur les liens)
