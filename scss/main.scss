@@ -174,3 +174,54 @@ img {
     font-size: 18px;
   }
 }
+
+// -----------------------------
+// Loader global (Design demandé)
+// -----------------------------
+// Utilise la couleur principale ($primary) définie dans `_custom.scss` pour respecter la DA
+$loader-color: $primary !default;
+
+.site-loader {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Fond blanc opaque pour masquer complètement le site derrière */
+  background-color: #ffffff;
+  z-index: 1050; /* au-dessus de la plupart des éléments */
+}
+
+/* Loader central reprenant le style fourni par l'utilisateur, adapté aux variables du projet */
+.loader {
+  width: 48px;
+  height: 48px;
+  border-width: 3px;
+  border-style: dashed solid solid dotted;
+  border-color: $loader-color $loader-color transparent $loader-color;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 20px;
+  top: 31px;
+  border: 10px solid transparent;
+  border-right-color: $loader-color;
+  transform: rotate(-40deg);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -119,41 +119,87 @@ const getRouteByUrl = (url) => {
 // ----
 // javascript
 const LoadContentPage = async () => {
-  const path = window.location.pathname;
-  const actualRoute = getRouteByUrl(path) || route404;
-  const allRolesArray = actualRoute.authorize;
+  // Affiche le loader global (fonctions définies dans js/scripts.js)
+  if (typeof showSiteLoader === "function") showSiteLoader();
 
-  // Si des règles d'accès sont définies
-  if (allRolesArray.length > 0) {
-    // cas spécial : page réservée aux "disconnected" (utilisateurs non connectés)
-    if (allRolesArray.includes("disconnected")) {
-      if (isConnected()) {
-        window.location.replace("/");
-        return;
-      }
-    } else {
-      // vérification du rôle de l'utilisateur
-      const roleUser = getRole();
-      if (!allRolesArray.includes(roleUser)) {
-        window.location.replace("/");
-        return;
+  try {
+    const path = window.location.pathname;
+    const actualRoute = getRouteByUrl(path) || route404;
+    const allRolesArray = actualRoute.authorize;
+
+    // Si des règles d'accès sont définies
+    if (allRolesArray.length > 0) {
+      // cas spécial : page réservée aux "disconnected" (utilisateurs non connectés)
+      if (allRolesArray.includes("disconnected")) {
+        if (typeof isConnected === "function" && isConnected()) {
+          if (typeof hideSiteLoader === "function") hideSiteLoader();
+          window.location.replace("/");
+          return;
+        }
+      } else {
+        // vérification du rôle de l'utilisateur
+        const roleUser = typeof getRole === "function" ? getRole() : null;
+        if (!allRolesArray.includes(roleUser)) {
+          if (typeof hideSiteLoader === "function") hideSiteLoader();
+          window.location.replace("/");
+          return;
+        }
       }
     }
+
+    // Récupération du contenu HTML de la route
+    const html = await fetch(actualRoute.pathHtml).then((res) => res.text());
+    document.getElementById("main-page").innerHTML = html;
+
+    // Ajout du script si nécessaire
+    if (actualRoute.pathJS !== "") {
+      const scriptTag = document.createElement("script");
+      scriptTag.type = "text/javascript";
+      scriptTag.src = actualRoute.pathJS;
+
+      // Quand le script est chargé, exécuter le show/hide des éléments puis masquer le loader
+      scriptTag.onload = () => {
+        if (typeof showAndHideElementsForRoles === "function") {
+          try {
+            showAndHideElementsForRoles();
+          } catch (e) {
+            console.error("Erreur lors de showAndHideElementsForRoles:", e);
+          }
+        }
+        if (typeof hideSiteLoader === "function") hideSiteLoader();
+      };
+
+      document.querySelector("body").appendChild(scriptTag);
+
+      // En cas où le script ne déclencherait pas onload (cache/erreur), placer un fallback
+      setTimeout(() => {
+        if (typeof showAndHideElementsForRoles === "function") {
+          try {
+            showAndHideElementsForRoles();
+          } catch (e) {
+            console.error(
+              "Erreur lors de showAndHideElementsForRoles (fallback):",
+              e,
+            );
+          }
+        }
+        if (typeof hideSiteLoader === "function") hideSiteLoader();
+      }, 800);
+    } else {
+      // Pas de script : on peut appeler directement le show/hide et masquer le loader
+      if (typeof showAndHideElementsForRoles === "function") {
+        try {
+          showAndHideElementsForRoles();
+        } catch (e) {
+          console.error("Erreur lors de showAndHideElementsForRoles:", e);
+        }
+      }
+      if (typeof hideSiteLoader === "function") hideSiteLoader();
+    }
+  } catch (err) {
+    console.error("Erreur lors du chargement de la route:", err);
+    if (typeof hideSiteLoader === "function") hideSiteLoader();
   }
-
-  // Récupération du contenu HTML de la route
-  const html = await fetch(actualRoute.pathHtml).then((res) => res.text());
-  document.getElementById("main-page").innerHTML = html;
-
-  // Ajout du script si nécessaire
-  if (actualRoute.pathJS !== "") {
-    const scriptTag = document.createElement("script");
-    scriptTag.type = "text/javascript";
-    scriptTag.src = actualRoute.pathJS;
-    document.querySelector("body").appendChild(scriptTag);
-  }
-
-  document.title = actualRoute.title + " - " + websiteName;
 };
 
 // ---

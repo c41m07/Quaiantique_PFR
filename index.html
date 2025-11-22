@@ -22,12 +22,8 @@
 <!-- Loader global -->
 <!-- ----------------------------- -->
 <!-- Loader global -->
-<div class="site-loader d-none" id="site-loader">
-    <div class="loader-spinner">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Chargement...</span>
-        </div>
-    </div>
+<div aria-hidden="false" class="site-loader" id="site-loader">
+    <div aria-label="Chargement" class="loader" role="status"></div>
 </div>
 
 <!-- ----------------------------- -->
@@ -129,7 +125,7 @@
 
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
-<script src="js/auth/validation.js"></script>
+<script src="js/validation.js"></script>
 <script src="./Router/Router.js" type="module"></script>
 <!-- DEBUG: script pour profiler -->
 <script src="./DEBUG/debug.js"></script>

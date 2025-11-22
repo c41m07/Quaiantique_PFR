@@ -130,3 +130,15 @@ Déploiement & infra
     - [ ] Réservations logique disponibilité
     - [ ] CRUD images + upload
     - [ ] CRUD plats/menus/categories
+
+## Loader global
+
+Un loader global a été ajouté pour améliorer la fluidité lors du chargement des pages client-side.
+
+- Markup: le loader est présent dans `index.html` sous l'ID `site-loader`.
+- Styles: ajoutés dans `scss/main.scss` (overlay centré et spinner).
+- Comportement: affiché automatiquement au démarrage, et par le `Router` lors des changements de page. Il est masqué après l'appel de
+  `showAndHideElementsForRoles()` (qui s'occupe d'afficher/masquer les éléments selon le rôle). Le `Router` contient un fallback pour masquer le
+  loader même en cas d'erreur ou si les scripts ne déclenchent pas `onload`.
+
+Pour tout ajustement (durée, animation, position), éditer `scss/main.scss` et `js/scripts.js`.

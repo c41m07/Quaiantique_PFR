@@ -22,8 +22,75 @@ const websiteName = "My Website"; // Exemple de valeur par défaut
 // Changement du titre de la page
 document.title = actualRoute.title + " - " + websiteName;
 
-//Afficher et masquer les éléments en fonction du rôle
-showAndHideElementsForRoles();
+// Afficher le loader global (présent dans index.html)
+function getSiteLoader() {
+  return document.getElementById("site-loader");
+}
+
+// Minimum display time (ms)
+const SITE_LOADER_MIN_MS = 5000;
+let _siteLoaderShownAt = 0;
+let _siteLoaderHideTimer = null;
+
+function showSiteLoader() {
+  const loader = getSiteLoader();
+  if (!loader) return;
+  // annule timer de masquage en cours
+  if (_siteLoaderHideTimer) {
+    clearTimeout(_siteLoaderHideTimer);
+    _siteLoaderHideTimer = null;
+  }
+  // afficher immédiatement
+  loader.classList.remove("d-none");
+  _siteLoaderShownAt = Date.now();
+}
+
+/**
+ * Masque le loader en respectant un temps minimum d'affichage.
+ * Si force === true, masque immédiatement (annule le délai).
+ */
+function hideSiteLoader(force = true) {
+  const loader = getSiteLoader();
+  if (!loader) return;
+  if (force) {
+    loader.classList.add("d-none");
+    _siteLoaderShownAt = 0;
+    if (_siteLoaderHideTimer) {
+      clearTimeout(_siteLoaderHideTimer);
+      _siteLoaderHideTimer = null;
+    }
+    return;
+  }
+
+  const elapsed = _siteLoaderShownAt
+    ? Date.now() - _siteLoaderShownAt
+    : SITE_LOADER_MIN_MS;
+  const remaining = Math.max(0, SITE_LOADER_MIN_MS - elapsed);
+
+  if (_siteLoaderHideTimer) {
+    clearTimeout(_siteLoaderHideTimer);
+  }
+
+  _siteLoaderHideTimer = setTimeout(() => {
+    loader.classList.add("d-none");
+    _siteLoaderShownAt = 0;
+    _siteLoaderHideTimer = null;
+  }, remaining);
+}
+
+// Afficher et masquer les éléments en fonction du rôle
+// Avant d'appeler showAndHideElementsForRoles on affiche le loader, et on le masque juste après
+showSiteLoader();
+try {
+  showAndHideElementsForRoles();
+} catch (err) {
+  // En cas d'erreur, on log et on continue (loader sera masqué par le fallback)
+  console.error("Erreur lors de showAndHideElementsForRoles:", err);
+}
+
+// Toujours masquer le loader après un court délai si la fonction ne l'a pas fait.
+// Cela évite de bloquer l'UI indéfiniment.
+setTimeout(() => hideSiteLoader(), 500);
 
 // -----------------------------
 // Gestion des cookies (lecture / écriture / suppression)
@@ -107,11 +174,8 @@ function getRole() {
  * Renvoie true si un token est présent, false sinon.
  */
 function isConnected() {
-  if (getToken() == null || getToken == undefined) {
-    return false;
-  } else {
-    return true;
-  }
+  const token = getToken();
+  return token !== null && token !== undefined && token !== "";
 }
 
 /**
@@ -144,23 +208,34 @@ function showAndHideElementsForRoles() {
       case "disconnected":
         if (userConnected) {
           element.classList.add("d-none");
+        } else {
+          element.classList.remove("d-none");
         }
         break;
       case "connected":
         if (!userConnected) {
           element.classList.add("d-none");
+        } else {
+          element.classList.remove("d-none");
         }
         break;
       case "admin":
-        if (!userConnected || role != "admin") {
+        if (!userConnected || role !== "admin") {
           element.classList.add("d-none");
+        } else {
+          element.classList.remove("d-none");
         }
         break;
       case "client":
-        if (!userConnected || role != "client") {
+        if (!userConnected || role !== "client") {
           element.classList.add("d-none");
+        } else {
+          element.classList.remove("d-none");
         }
         break;
     }
   });
+
+  // Une fois fini, masquer le loader
+  hideSiteLoader();
 }
