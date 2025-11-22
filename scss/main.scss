@@ -1,6 +1,13 @@
+// -----------------------------
+// Styles principaux de l'application
+// Importations et règles globales, puis composants spécifiques
+// -----------------------------
 @import url("/node_modules/bootstrap-icons/font/bootstrap-icons.css");
 @import "custom";
 
+// -----------------------------
+// Layout global
+// -----------------------------
 html,
 body {
   height: 100%;
@@ -25,6 +32,9 @@ html {
   font-size: 16px;
 }
 
+// -----------------------------
+// Images et scènes
+// -----------------------------
 img {
   max-width: 600px;
   max-height: 300px;
@@ -71,6 +81,9 @@ img {
   text-align: justify;
 }
 
+// -----------------------------
+// Carte galerie / image-card
+// -----------------------------
 .image-card {
   position: relative;
 
@@ -123,7 +136,10 @@ img {
   padding: 10px;
 }
 
-//média
+// -----------------------------
+// Media queries (taille de l'écran)
+// -----------------------------
+
 /* Petit mobile (– 480px) */
 @media (max-width: 480px) {
   html {

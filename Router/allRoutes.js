@@ -1,6 +1,9 @@
+// -----------------------------
+// Définition des routes du site
+// -----------------------------
 import Route from "./Route.js";
 
-//Définir ici vos routes
+// Définir ici vos routes (une instance Route par page)
 export const allRoutes = [
   new Route("/", "Accueil", "/pages/home.html"),
 
@@ -58,5 +61,5 @@ export const allRoutes = [
   new Route("/menu", "notre menu", "/pages/carte.html", "", false, []),
 ];
 
-//Le titre s'affiche comme ceci : Route.titre - websitename
+// Le titre s'affiche comme ceci : Route.titre - websiteName
 export const websiteName = "Quai Antique";
