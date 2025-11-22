@@ -16,13 +16,14 @@
 <!-- ----------------------------- -->
 <section>
     <div class="container my-4">
-        <form class="col-12 col-md-8 mx-auto">
+        <form class="col-12 col-md-8 mx-auto" id="FormSignup">
             <div class="row row-gap-2">
                 <div class="col-md-3">
                     <label class="form-label" for="name">Nom</label>
                     <input
                             class="form-control"
                             id="name"
+                            name="name"
                             placeholder="Entrez votre nom"
                             required
                             type="text"
@@ -36,6 +37,7 @@
                     <input
                             class="form-control"
                             id="firstname"
+                            name="firstname"
                             placeholder="Entrez votre Prénom"
                             required
                             type="text"
@@ -49,6 +51,7 @@
                     <input
                             class="form-control"
                             id="email"
+                            name="email"
                             placeholder="Entrez votre adresse e-mail"
                             required
                             type="email"
@@ -62,6 +65,7 @@
                     <input
                             class="form-control"
                             id="password"
+                            name="password"
                             placeholder="Entrez votre mot de passe"
                             required
                             type="password"
@@ -78,6 +82,7 @@
                     <input
                             class="form-control"
                             id="confirmPassword"
+                            name="confirmPassword"
                             placeholder="Confirmez votre mot de passe"
                             required
                             type="password"
@@ -96,7 +101,7 @@
                 </div>
 
                 <div class="col-12 ">
-                    <button class="btn btn-primary w-100" type="submit">S'inscrire</button>
+                    <button class="btn btn-primary w-100" id="btn_validate_signup" type="button">S'inscrire</button>
                 </div>
             </div>
         </form>
