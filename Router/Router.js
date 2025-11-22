@@ -5,7 +5,13 @@ import Route from "./Route.js";
 import { allRoutes, websiteName } from "./allRoutes.js";
 
 // Création d'une route pour la page 404 (page introuvable)
-const route404 = new Route("404", "Page introuvable", "/pages/404.html");
+const route404 = new Route(
+  "404",
+  "Page introuvable",
+  "/pages/404.html",
+  false,
+  [],
+);
 
 // -----------------------------
 // Récupération de route
@@ -33,78 +39,146 @@ const getRouteByUrl = (url) => {
 // -----------------------------
 
 // Affiche le loader global (doit exister dans index.html)
-function showLoader() {
-  const loader = document.getElementById("site-loader");
-  if (loader) loader.classList.remove("d-none");
-}
+// function showLoader() {
+//   const loader = document.getElementById("site-loader");
+//   if (loader) loader.classList.remove("d-none");
+// }
+//
+// // Masque le loader global
+// function hideLoader() {
+//   const loader = document.getElementById("site-loader");
+//   if (loader) loader.classList.add("d-none");
+// }
 
-// Masque le loader global
-function hideLoader() {
-  const loader = document.getElementById("site-loader");
-  if (loader) loader.classList.add("d-none");
-}
+// ----
+
+// ---
 
 // -----------------------------
 // Chargement du contenu de la page
 // -----------------------------
 
 // Fonction principale pour charger le contenu d'une route dans #main-page
-const LoadContentPage = async () => {
-  showLoader();
-  const path = window.location.pathname;
-  // Récupération de l'URL actuelle
-  const actualRoute = getRouteByUrl(path);
+// const LoadContentPage = async () => {
+//   showLoader();
+//   const path = window.location.pathname;
+//   // Récupération de l'URL actuelle
+//   const actualRoute = getRouteByUrl(path);
+//
+//   // Vérifier l'autorisation si nécessaire
+//   if (actualRoute.requiresAuth) {
+//     // fonctions isConnected() et getRole() doivent être définies globalement (js/scripts.js)
+//     if (typeof isConnected === "function") {
+//       if (!isConnected()) {
+//         // rediriger vers signin
+//         window.history.pushState({}, "", "/signin");
+//         hideLoader();
+//         return LoadContentPage();
+//       }
+//     }
+//     if (
+//       actualRoute.roles &&
+//       actualRoute.roles.length > 0 &&
+//       typeof getRole === "function"
+//     ) {
+//       const role = getRole();
+//       if (!role || !actualRoute.roles.includes(role)) {
+//         window.history.pushState({}, "", "/signin");
+//         hideLoader();
+//         return LoadContentPage();
+//       }
+//     }
+//   }
+//
+//   // Récupération du contenu HTML de la route et injection
+//   document.getElementById("main-page").innerHTML = await fetch(
+//     actualRoute.pathHtml,
+//   ).then((data) => data.text());
+//
+//   // Ajout du contenu JavaScript
+//   if (actualRoute.pathJS !== "") {
+//     // Création d'une balise script
+//     var scriptTag = document.createElement("script");
+//     scriptTag.setAttribute("type", "text/javascript");
+//     scriptTag.setAttribute("src", actualRoute.pathJS);
+//
+//     // Ajout de la balise script au corps du document
+//     document.querySelector("body").appendChild(scriptTag);
+//   }
+//
+//   // Changement du titre de la page
+//   document.title = actualRoute.title + " - " + websiteName;
+//
+//   //Show & Hide
+//   showAndHideElementForRole();
+//
+//   // Masquer le loader une fois que l'affichage est prêt
+//   hideLoader();
+// };
 
-  // Vérifier l'autorisation si nécessaire
-  if (actualRoute.requiresAuth) {
-    // fonctions isConnected() et getRole() doivent être définies globalement (js/scripts.js)
-    if (typeof isConnected === "function") {
-      if (!isConnected()) {
-        // rediriger vers signin
-        window.history.pushState({}, "", "/signin");
-        hideLoader();
-        return LoadContentPage();
+// ----
+// javascript
+const LoadContentPage = async () => {
+  const path = window.location.pathname;
+  const actualRoute = getRouteByUrl(path) || route404;
+  const allRolesArray = actualRoute.authorize;
+
+  // Si des règles d'accès sont définies
+  if (allRolesArray.length > 0) {
+    // cas spécial : page réservée aux "disconnected" (utilisateurs non connectés)
+    if (allRolesArray.includes("disconnected")) {
+      if (isConnected()) {
+        window.location.replace("/");
+        return;
       }
-    }
-    if (
-      actualRoute.roles &&
-      actualRoute.roles.length > 0 &&
-      typeof getRole === "function"
-    ) {
-      const role = getRole();
-      if (!role || !actualRoute.roles.includes(role)) {
-        window.history.pushState({}, "", "/signin");
-        hideLoader();
-        return LoadContentPage();
+    } else {
+      // vérification du rôle de l'utilisateur
+      const roleUser = getRole();
+      if (!allRolesArray.includes(roleUser)) {
+        window.location.replace("/");
+        return;
       }
     }
   }
 
-  // Récupération du contenu HTML de la route et injection
-  document.getElementById("main-page").innerHTML = await fetch(
-    actualRoute.pathHtml,
-  ).then((data) => data.text());
+  // Récupération du contenu HTML de la route
+  const html = await fetch(actualRoute.pathHtml).then((res) => res.text());
+  document.getElementById("main-page").innerHTML = html;
 
-  // Ajout du contenu JavaScript
+  // Appeler la logique d'affichage basée sur le rôle après injection du HTML
+  if (typeof showAndHideElementsForRoles === "function") {
+    try {
+      showAndHideElementsForRoles();
+    } catch (e) {
+      console.warn("showAndHideElementsForRoles failed:", e);
+    }
+  }
+
+  // Ajout du script si nécessaire
   if (actualRoute.pathJS !== "") {
-    // Création d'une balise script
-    var scriptTag = document.createElement("script");
-    scriptTag.setAttribute("type", "text/javascript");
-    scriptTag.setAttribute("src", actualRoute.pathJS);
-
-    // Ajout de la balise script au corps du document
+    const scriptTag = document.createElement("script");
+    scriptTag.type = "text/javascript";
+    scriptTag.src = actualRoute.pathJS;
+    // Après que le script externe ait été chargé et exécuté, rappeler la logique
+    scriptTag.onload = function () {
+      if (typeof showAndHideElementsForRoles === "function") {
+        try {
+          showAndHideElementsForRoles();
+        } catch (e) {
+          console.warn(
+            "showAndHideElementsForRoles failed after script load:",
+            e,
+          );
+        }
+      }
+    };
     document.querySelector("body").appendChild(scriptTag);
   }
 
-  // Changement du titre de la page
   document.title = actualRoute.title + " - " + websiteName;
-
-  //Show & Hide
-  showAndHideElementForRole();
-
-  // Masquer le loader une fois que l'affichage est prêt
-  hideLoader();
 };
+
+// ---
 
 // -----------------------------
 // Gestion des événements de routage

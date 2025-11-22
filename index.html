@@ -13,6 +13,8 @@
             rel="stylesheet"
     />
     <link href="scss/main.css" rel="stylesheet"/>
+    <!-- DEBUG: stylesheet pour le profiler (facile à supprimer) -->
+    <link href="./DEBUG/debug.css" rel="stylesheet"/>
     <title>Quai Antique</title>
 </head>
 <body class="layout">
@@ -87,6 +89,23 @@
 <!-- ----------------------------- -->
 <!-- Footer -->
 <!-- ----------------------------- -->
+<!-- DEBUG PROFILER START - facile à retirer -->
+<div aria-label="Debug profiler" class="debug-profiler" id="debug-profiler" role="region">
+    <div class="debug-info">
+        <strong>Profil:</strong>
+        <span id="debug-role">—</span>
+    </div>
+    <div class="debug-info">
+        <strong>Statut:</strong>
+        <span id="debug-status">—</span>
+    </div>
+    <div class="debug-actions">
+        <button class="debug-btn" id="debug-toggle">Masquer</button>
+        <button class="debug-btn" id="debug-refresh" title="Rafraîchir">Refresh</button>
+    </div>
+</div>
+<!-- DEBUG PROFILER END -->
+
 <!--    Footer  -->
 <footer class="bg-dark text-white text-center footer ">
     <div class="row py-4">
@@ -111,5 +130,7 @@
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
 <script src="./Router/Router.js" type="module"></script>
+<!-- DEBUG: script pour profiler -->
+<script src="./DEBUG/debug.js"></script>
 </body>
 </html>

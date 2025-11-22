@@ -20,8 +20,7 @@ if (btnSingin) {
 // Vérifie si les identifiants correspondent à un jeu de test.
 // Remplacer par un appel API réel en production.
 function checkCredentials() {
-  console.log("Sign-in button clicked");
-  // Appel d'API ICI
+  // Appel d'API FUTURE ICI
   if (
     mailInput &&
     passwordInput &&
@@ -32,6 +31,17 @@ function checkCredentials() {
     const token = "ceci_est_un_token_de_connexion_test_valide";
     setToken(token);
     setCookie(roleCookieName, "admin", 7);
+    window.location.href = "/";
+  } else if (
+    mailInput &&
+    passwordInput &&
+    mailInput.value == "test2@mail.fr" &&
+    passwordInput.value == "1234"
+  ) {
+    // placer un vrai token
+    const token = "ceci_est_un_token_de_connexion_test_valide_client";
+    setToken(token);
+    setCookie(roleCookieName, "client", 7);
     window.location.href = "/";
   } else {
     // connexion pas OK
