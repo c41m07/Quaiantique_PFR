@@ -150,17 +150,7 @@ function SignUpUser() {
 }
 
 // Attacher la validation sur le submit du formulaire si présent
-if (formEl && !window.__Quaiantique_signup_init) {
-    formEl.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (validateForm()) {
-            SignUpUser();
-        } else {
-            console.log('formulaire invalide (submit)');
-        }
-    });
-} else if (formEl) {
-    // Si on est déjà initialisé, on rattache un listener uniquement si nécessaire
+if (formEl) {
     formEl.addEventListener('submit', function (e) {
         e.preventDefault();
         if (validateForm()) {
@@ -172,16 +162,7 @@ if (formEl && !window.__Quaiantique_signup_init) {
 }
 
 // Fallback: bouton click
-if (btn_validate && !window.__Quaiantique_signup_init) {
-    btn_validate.addEventListener("click", function (e) {
-        e.preventDefault();
-        if (validateForm()) {
-            SignUpUser();
-        } else {
-            console.log("formulaire invalide (click)");
-        }
-    });
-} else if (btn_validate) {
+if (btn_validate) {
     btn_validate.addEventListener("click", function (e) {
         e.preventDefault();
         if (validateForm()) {
