@@ -5,28 +5,32 @@ import Route from "./Route.js";
 
 // Définir ici vos routes (une instance Route par page)
 export const allRoutes = [
-  new Route("/", "Accueil", "/pages/home.html"),
+  new Route("/", "Accueil", "/pages/home.html", false, []),
 
-  new Route("/galerie", "La galerie", "/pages/galerie.html"),
+  new Route("/galerie", "La galerie", "/pages/galerie.html", false, []),
 
   new Route(
     "/signin",
     "connexion",
     "/pages/auth/signin.html",
     "/js/auth/signin.js",
+    false,
+    [],
   ),
   new Route(
     "/signup",
     "inscription",
     "/pages/auth/signup.html",
     "js/auth/signup.js",
+    false,
+    [],
   ),
   new Route("/account", "mon compte", "/pages/auth/account.html", "", true, [
     "client",
     "admin",
   ]),
   new Route(
-    "/editpassword",
+    "/password_edit",
     "modifier mot de passe",
     "/pages/auth/editpassword.html",
     "",
@@ -50,14 +54,6 @@ export const allRoutes = [
     ["client", "admin"],
   ),
 
-  new Route(
-    "/editreservation",
-    "édité vos réservation",
-    "pages/reservation/reserver.html",
-    "",
-    true,
-    ["client", "admin"],
-  ),
   new Route("/menu", "notre menu", "/pages/carte.html", "", false, []),
 ];
 
