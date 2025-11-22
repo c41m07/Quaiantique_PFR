@@ -30,7 +30,7 @@ function checkCredentials() {
     // placer un vrai token
     const token = "ceci_est_un_token_de_connexion_test_valide";
     setToken(token);
-    setCookie(roleCookieName, "admin", 7);
+    setCookie(roleCookieName, ["admin"], 7);
     window.location.href = "/";
   } else if (
     mailInput &&

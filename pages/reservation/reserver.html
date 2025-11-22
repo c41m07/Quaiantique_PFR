@@ -48,6 +48,7 @@
                             type="text"
                             value="Cacahouetes"
                     />
+                    <div class="invalid-feedback">Max 200 caractères pour les allergies.</div>
                 </div>
                 <div class="col-12 ">
                     <label class="form-label" for="NbConvivesInput">
@@ -61,6 +62,7 @@
                             type="number"
                             value="4"
                     />
+                    <div class="invalid-feedback">Entrez un nombre entier entre 1 et 20.</div>
                 </div>
                 <div class="col-12 ">
                     <label class="form-label" for="Dateinput">
@@ -71,8 +73,10 @@
                             id="Dateinput"
                             name="Date"
                             placeholder=""
+                            required
                             type="date"
                     />
+                    <div class="invalid-feedback">La date doit être aujourd'hui ou ultérieure.</div>
                 </div>
                 <div class="col-6 ">
                     <p>Service</p>
@@ -83,7 +87,7 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input checked class="form-check-input" id="soirRadio" name="serviceChoisi" type="radio">
+                        <input class="form-check-input" id="soirRadio" name="serviceChoisi" type="radio">
                         <label class="form-check-label" for="soirRadio">
                             Soir
                         </label>
@@ -92,21 +96,27 @@
                 <div class="col-6 ">
                     <label class="form-label" for="selectHour">Heure</label>
                     <select class="form-select" id="selectHour" name="Heure">
-                        <option>19:30</option>
-                        <option>19:45</option>
-                        <option>20:00</option>
-                        <option>20:15</option>
-                        <option>20:30</option>
-                        <option>20:45</option>
-                        <option>21:00</option>
+                        <option disabled selected value="">Choisissez une heure</option>
+                        <option value="19:30">19:30</option>
+                        <option value="19:45">19:45</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:15">20:15</option>
+                        <option value="20:30">20:30</option>
+                        <option value="20:45">20:45</option>
+                        <option value="21:00">21:00</option>
                     </select>
+                    <div class="invalid-feedback">Veuillez sélectionner une heure.</div>
                 </div>
                 <div class="text-center my-4">
                     <a class="btn btn-secondary" href="/reservation">Annulé</a>
-                    <button class="btn btn-primary" type="button">Réserver</button>
+                    <button class="btn btn-primary" id="btnReserve" type="button">Réserver</button>
                 </div>
             </div>
 
         </form>
     </div>
 </section>
+
+<!-- Ajout des scripts de validation spécifiques -->
+<script src="/js/auth/validation.js"></script>
+<script src="/js/validation/reservation.js"></script>

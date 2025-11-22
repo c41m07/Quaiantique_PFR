@@ -7,7 +7,13 @@ import Route from "./Route.js";
 export const allRoutes = [
   new Route("/", "Accueil", "/pages/home.html", []),
 
-  new Route("/galerie", "La galerie", "/pages/galerie.html", []),
+  new Route(
+    "/galerie",
+    "La galerie",
+    "/pages/galerie.html",
+    [],
+    "/js/validation/galerie.js",
+  ),
 
   new Route(
     "/signin",
@@ -23,24 +29,30 @@ export const allRoutes = [
     ["disconnected"],
     "/js/auth/signup.js",
   ),
-  new Route("/account", "mon compte", "/pages/auth/account.html", [
-    "client",
-    "admin",
-  ]),
+  new Route(
+    "/account",
+    "mon compte",
+    "/pages/auth/account.html",
+    ["client", "admin"],
+    "/js/validation/account.js",
+  ),
   new Route(
     "/password_edit",
     "modifier mot de passe",
     "/pages/auth/editpassword.html",
     ["client", "admin"],
+    "/js/validation/password.js",
   ),
   new Route("/reservation", "réservation", "/pages/reservation/allresa.html", [
     "client",
+    "admin",
   ]),
   new Route(
     "/reserver",
     "réserver une table",
     "/pages/reservation/reserver.html",
-    ["client"],
+    ["client", "admin"],
+    "/js/validation/reservation.js",
   ),
 
   new Route("/menu", "notre menu", "/pages/carte.html", []),

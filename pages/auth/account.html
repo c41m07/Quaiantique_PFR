@@ -25,6 +25,7 @@
                         type="text"
                         value="John"
                 />
+                <div class="invalid-feedback">Le nom est requis.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="PrenomInput">Prénom</label>
@@ -36,6 +37,7 @@
                         type="text"
                         value="Doe"
                 />
+                <div class="invalid-feedback">Le prénom est requis.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="AllergieInput">Allergies</label>
@@ -47,6 +49,7 @@
                         type="text"
                         value="Cacahouetes"
                 />
+                <div class="invalid-feedback">Max 200 caractères pour les allergies.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="NbConvivesInput"
@@ -60,6 +63,7 @@
                         type="number"
                         value="4"
                 />
+                <div class="invalid-feedback">Entrez un nombre entier entre 1 et 20.</div>
             </div>
             <div class="text-center">
                 <button class="btn btn-primary" type="submit">
@@ -73,3 +77,7 @@
         </div>
     </div>
 </section>
+
+<!-- Ajout des scripts de validation spécifiques à cette page -->
+<script src="/js/auth/validation.js"></script>
+<script src="/js/validation/account.js"></script>

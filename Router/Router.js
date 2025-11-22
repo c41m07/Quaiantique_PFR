@@ -145,33 +145,11 @@ const LoadContentPage = async () => {
   const html = await fetch(actualRoute.pathHtml).then((res) => res.text());
   document.getElementById("main-page").innerHTML = html;
 
-  // Appeler la logique d'affichage basée sur le rôle après injection du HTML
-  if (typeof showAndHideElementsForRoles === "function") {
-    try {
-      showAndHideElementsForRoles();
-    } catch (e) {
-      console.warn("showAndHideElementsForRoles failed:", e);
-    }
-  }
-
   // Ajout du script si nécessaire
   if (actualRoute.pathJS !== "") {
     const scriptTag = document.createElement("script");
     scriptTag.type = "text/javascript";
     scriptTag.src = actualRoute.pathJS;
-    // Après que le script externe ait été chargé et exécuté, rappeler la logique
-    scriptTag.onload = function () {
-      if (typeof showAndHideElementsForRoles === "function") {
-        try {
-          showAndHideElementsForRoles();
-        } catch (e) {
-          console.warn(
-            "showAndHideElementsForRoles failed after script load:",
-            e,
-          );
-        }
-      }
-    };
     document.querySelector("body").appendChild(scriptTag);
   }
 

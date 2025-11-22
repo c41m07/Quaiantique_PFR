@@ -262,6 +262,7 @@
                                 placeholder="Lasagnes à la bolognese"
                                 type="text"
                         />
+                        <div class="invalid-feedback">Le titre est requis.</div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="ImageInput">Image</label>
@@ -271,6 +272,7 @@
                                 name="Image"
                                 type="file"
                         />
+                        <div class="invalid-feedback">Veuillez fournir une image (jpg/png/webp) < 5MB.</div>
                     </div>
                     <div class="text-center">
                         <button class="btn btn-primary" type="button">Enregistrer</button>
@@ -312,6 +314,7 @@
                                 placeholder="Entrer SUPPRIMER pour confirmer"
                                 type="text"
                         />
+                        <div class="invalid-feedback">Tapez SUPPRIMER pour confirmer la suppression.</div>
                     </div>
                     <div class="text-center">
                         <button class="btn btn-danger" type="button">Suprimer</button>
@@ -353,6 +356,7 @@
                                 placeholder="Lasagnes à la bolognese"
                                 type="text"
                         />
+                        <div class="invalid-feedback">Le titre est requis.</div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="ImageInput">Image</label>
@@ -362,6 +366,7 @@
                                 name="Image"
                                 type="file"
                         />
+                        <div class="invalid-feedback">Veuillez fournir une image (jpg/png/webp) < 5MB.</div>
                     </div>
                     <div class="text-center">
                         <button class="btn btn-primary" type="button">Enregistrer</button>
@@ -371,3 +376,7 @@
         </div>
     </div>
 </div>
+
+<!-- Ajout des scripts de validation pour les modals -->
+<script src="/js/auth/validation.js"></script>
+<script src="/js/validation/galerie.js"></script>
