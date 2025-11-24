@@ -3,6 +3,7 @@
 // -----------------------------
 // implémentation du js de signup
 
+
 // Vérification des champs du formulaire
 const btn_validate = document.getElementById("btn_validate_signup");
 const nameEl = document.getElementById("name");
@@ -11,6 +12,7 @@ const emailEl = document.getElementById("email");
 const passwordEl = document.getElementById("password");
 const confirmEl = document.getElementById("confirmPassword");
 const formEl = document.getElementById("FormSignup");
+
 
 // -----------------------------
 // Validation du formulaire
@@ -35,9 +37,6 @@ function validateForm() {
 
     const confirmValid = confirmEl ? checkPasswordMatch(confirmEl) : true;
     valid = valid && confirmValid;
-
-    // Mise à jour de l'état du bouton d'envoi
-    if (btn_validate) btn_validate.disabled = !valid;
 
     return valid;
 }
@@ -144,9 +143,22 @@ function SignUpUser() {
     console.log('SignUpUser envoi:', {firstName: dataForm.get("firstname"), lastName: dataForm.get("name"), email: dataForm.get("email")});
 
     fetch("http://127.0.0.1:8000/api/registration", requestOptions)
-        .then(response => response.json())
-        .then(result => console.log(result))
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                alert("hoho un probléme lors de l'inscription' est survenue");
+
+            }
+        })
+        .then(result => {
+            if (result) {
+                alert("Bravo tu est maintenant inscrit !");
+                document.location.href = "/signin";
+            }
+        })
         .catch(error => console.log('error', error));
+
 }
 
 // Attacher la validation sur le submit du formulaire si présent
