@@ -13,6 +13,7 @@ export const allRoutes = [
         "/pages/galerie.html",
         [],
         "/js/validation/galerie.js",
+        "/js/galerie.js"
     ),
 
     new Route(
@@ -33,25 +34,25 @@ export const allRoutes = [
         "/account",
         "mon compte",
         "/pages/auth/account.html",
-        ["ROLE_USER", "admin"],
+        ["ROLE_USER", "ROLE_ADMIN"],
         "/js/validation/account.js",
     ),
     new Route(
         "/password_edit",
         "modifier mot de passe",
         "/pages/auth/editpassword.html",
-        ["ROLE_USER", "admin"],
+        ["ROLE_USER", "ROLE_ADMIN"],
         "/js/validation/password.js",
     ),
     new Route("/reservation", "réservation", "/pages/reservation/allresa.html", [
         "ROLE_USER",
-        "admin",
+        "ROLE_ADMIN",
     ]),
     new Route(
         "/reserver",
         "réserver une table",
         "/pages/reservation/reserver.html",
-        ["ROLE_USER", "admin"],
+        ["ROLE_USER", "ROLE_ADMIN"],
         "/js/validation/reservation.js",
     ),
 

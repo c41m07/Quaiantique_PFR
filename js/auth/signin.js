@@ -52,17 +52,12 @@ function checkCredentials() {
                 // placer un vrai token
                 const token = result.apiToken;
                 setToken(token);
-                if (mailInput && mailInput.value === "admin@admin.fr") {
-                    setCookie(roleCookieName, "admin", 7);
-                    window.location.href = "/account";
-                } else {
-                    setCookie(roleCookieName, result.roles[0], 7);
-                    window.location.href = "/account";
-                }
+
+                setCookie(roleCookieName, result.roles[0], 7);
+                window.location.href = "/account";
+
             }
         })
 
         .catch(error => console.log('error', error));
 }
-
-// Appel d'API FUTURE ICI

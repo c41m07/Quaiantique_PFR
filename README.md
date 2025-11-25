@@ -2,17 +2,17 @@
 
 But de ce fichier
 
-- Fournir un état clair, précis et à jour du projet par rapport au cahier des charges (`docs/CDC_Quai_Antique.md`) et donner une TODO séparée :
+- Fournir un état clair, précis et à jour du projet par rapport au cahier des charges (`docs/CDC_Quai_Antique.md`) et donner une TODO séparée:
   *Front (prioritaire)* puis *Back*.
 
-Dernière mise à jour : 22/11/2025
+Dernière mise à jour: 22/11/2025
 
 ---
 
 1) Contexte rapide
 
-- Projet : site vitrine + administration pour le restaurant "Quai Antique".
-- Sources des exigences : `docs/CDC_Quai_Antique.md` et `docs/Diagramme sans nom.drawio.html`.
+- Projet: site vitrine + administration pour le restaurant "Quai Antique".
+- Sources des exigences: `docs/CDC_Quai_Antique.md` et `docs/Diagramme sans nom.drawio.html`.
 - Stack actuelle (dépôt) : pages HTML/CSS/JS statiques, router client dans `Router/`, assets dans `image/`, styles dans `scss/`.
 - Aucun back-end n'est présent dans le dépôt (pas d'API, pas de DB).
 
@@ -30,11 +30,11 @@ Dernière mise à jour : 22/11/2025
 - Auth (CDC) : inscription + connexion, admin seedé, pré-remplissage formulaires → Statut : front UI présent, back absent.
 - Galerie (CDC) : CRUD images + titre au survol + CTA vers réservation → Statut : UI + modals présents, upload/CRUD serveur manquants.
 - Carte & menus (CDC) : CRUD catégories/plats/menus → Statut : page publique statique ok, CRUD manquant.
-- Réservations (CDC) : créneaux 15 min, services 2h, vérification disponibilité, max convives, auth requise pour réserver → Statut : formulaire côté
+- Réservations (CDC): créneaux 15 min, services 2 h, vérification disponibilité, max convives, auth requise pour réserver → Statut: formulaire côté
   client présent, logique disponibilité et auth manquantes.
-- Paramètres restaurant (CDC) : horaires & max convives modifiables par admin → Statut : non implémenté.
+- Paramètres restaurant (CDC): horaires ET max convives modifiables par admin → Statut : non implémenté.
 
-En résumé : le front (UI) est largement démarré. La logique métier et la persistance demandées par le CDC nécessitent un back-end que le dépôt ne
+En résumé : le front (UI) est largement démarré. La logique métier et la persistance demandée par le CDC nécessitent un back-end que le dépôt ne
 contient pas encore.
 
 ---
@@ -47,42 +47,43 @@ contient pas encore.
 ---
 
 5) TODO — FRONT (PRIORITAIRE)
-   Le front doit être stabilisé, rendu robuste et prêt à consommer des APIs (mock ou réelles). Voici la liste priorisée et actionnable.
+   Le front doit être stabilisé, rendu robuste et prêt à consommer des API (mock ou réelles). Voici la liste priorisée et actionnable.
 
 A. Flux et sécurité UX (critique)
 
-- [ ] Authentification dans le routage : protéger les routes qui exigent d'être connecté (`/reserver`, `/account`, pages d'administration). Ajouter
-  `requiresAuth`/`roles` dans `Router/allRoutes.js` et vérifier côté router avant d'injecter la page.
+- [ ] Authentification dans le routage : protéger les routes qui exigent d’être connecté (`/reserver`, `/account`, pages d’administration). Ajouter
+  `requiresAuth`/`roles` dans `Router/allRoutes.js` et vérifier un côté router avant d’injecter la page.
 - [ ] Ajouter un loader global : afficher pendant le fetch/injection des pages et masquer après `showAndHideElementForRole(...)` et initialisation de
   la page.
 - [ ] Valider tous les formulaires (client-side) : signup, signin, reserver, modals galerie — HTML5 + validation JS (messages inline, classes
   `.is-invalid`).
-- [ ] Confirmation d'annulation d'une réservation : implémenter une modale réutilisable de confirmation (ou page si tu préfères), puis n'exécuter la
-  suppression qu'après confirmation.
+- [ ] Confirmation d’annulation d’une réservation : implémenter une modale réutilisable de confirmation (ou page si tu préfères), puis n’exécuter la
+  suppression qu’après confirmation.
 
 B. Fonctionnalité & Intégration
 
-- [ ] Page de gestion de la carte (UI admin) : `pages/admin/carte.html` ou équivalent, modals pour CRUD catégories/plats/menus (prête à appeler
-  l'API).
-- [ ] Finaliser la page publique "La carte" : rendre la structure modulaire, prévoir chargement depuis `data/carte.json` (mock) ou via `js/api.js`.
+- [ ] Page de gestion de la carte (UI admin) : `pages/admin/carte.html` ou équivalent, modal pour CRUD catégories/plats/menus (prête à appeler
+  l’API).
+- [ ] Finaliser la page publique "La carte" : rendre la structure modulaire, prévoir un chargement depuis `data/carte.json` (mock) ou via `js/api.js`.
 - [ ] Créer `js/api.js` : wrapper fetch (headers, Authorization, gestion erreurs, timeouts) pour standardiser appels API.
-- [ ] Mettre en place gestion d'erreurs globale côté client : toasts/alert area (`showError`, `showSuccess`).
+- [ ] Mettre en place gestion d’erreurs globale côté client : toasts/alert area (`showError`, `showSuccess`).
 
-C. Expérience & design
+C. Expérience ET design
 
-- [ ] Animations d'arrivée des blocs (CSS + petit JS pour stagger) pour lisser le rendu et rendre l'arrivée des sections plus fluide.
+- [ ] Animations d’arrivée des blocs (CSS + petit JS pour stagger) pour lisser le rendu et rendre l’arrivée des sections plus fluide.
 - [ ] Nouveau design system (optionnel) : `scss/_alt-design.scss` + palette Coolors, polices et variantes; permettre switch/comment pour tester.
 - [ ] Prototypage Figma : ajouter lien dans README / `docs/figma.md` si tu fournis le prototype.
 
-D. Sécurité & déploiement front
+D. Sécurité ET déploiement front
 
-- [ ] Recommandations de sécurité front : documenter stratégie de stockage token (cookies HttpOnly recommandés), éviter innerHTML pour contenus non
-  sûrs, limiter taille d'upload côté client, échapper tout contenu dynamique.
+- [ ] Recommandations de sécurité front : documenter une stratégie de stockage token (cookies HttpOnly recommandés), éviter innerHTML pour contenus
+  non
+  sûrs, limiter un taillé d’upload côté client, échapper tout contenu dynamique.
 - [ ] Mettre en ligne la partie front (statisque) : instructions pour GitHub Pages / Netlify / Vercel (préparer un petit build si besoin).
 
 E. Petits compléments recommandés
 
-- [ ] Ajouter des fonctions d'initialisation par page (`initPageName()`) et documenter l'API du router pour les appeler après injection.
+- [ ] Ajouter des fonctions d’initialisation par page (`initPageName()`) et documenter l’API de router pour les appeler après injection.
 - [ ] Tests manuels à réaliser : navigation/routing, loader, formulaires valides/invalide, modale annulation.
 - [ ] Accessibility quick pass : aria-labels, focus management, contraste.
 
@@ -94,7 +95,7 @@ E. Petits compléments recommandés
 Priorité haute (core)
 
 - [ ] Initialiser `server/` (Node.js + Express) et DB (SQLite en dev).
-- [ ] Auth & Users : POST `/api/auth/signup`, POST `/api/auth/signin`, GET/PUT/DELETE `/api/users/me`; seed admin.
+- [ ] Auth & Users: POST `/api/auth/signup`, POST `/api/auth/signin`, GET/PUT/DELETE `/api/users/me`; seed admin.
 - [ ] Settings Restaurant : endpoints pour `openHourLunch`, `openHourDinner`, `maxConvives`.
 - [ ] Réservations : POST `/api/reservations` (vérification disponibilité 15-min slots sur fenêtre 2h), GET `/api/reservations` (admin filter par
   date), GET `/api/reservations/me`, PUT/DELETE avec autorisations.
@@ -121,9 +122,9 @@ Déploiement & infra
     - [ ] Créer page gestion carte (UI)
     - [ ] Rendre `pages/carte.html` modulaire (mock JSON)
     - [ ] Créer `js/api.js` (wrapper fetch)
-    - [ ] Ajouter animations d'arrivée
+    - [ ] Ajouter des animations d’arrivée
     - [ ] Prototypage/design (Figma + alt design)
-    - [ ] Documenter sécurité front
+    - [ ] Documenter une sécurité front
     - [ ] Préparer déploiement statique
 - Back (après front) :
     - [ ] Générer `server/` + endpoints auth
@@ -133,9 +134,9 @@ Déploiement & infra
 
 ## Loader global
 
-Un loader global a été ajouté pour améliorer la fluidité lors du chargement des pages client-side.
+Un loader global a été ajouté pour améliorer la fluidité lors du chargement des pages client side.
 
-- Markup: le loader est présent dans `index.html` sous l'ID `site-loader`.
+- Markup: le loader est présent dans `index.html` sous l’ID `site-loader`.
 - Styles: ajoutés dans `scss/main.scss` (overlay centré et spinner).
 - Comportement: affiché automatiquement au démarrage, et par le `Router` lors des changements de page. Il est masqué après l'appel de
   `showAndHideElementsForRoles()` (qui s'occupe d'afficher/masquer les éléments selon le rôle). Le `Router` contient un fallback pour masquer le
