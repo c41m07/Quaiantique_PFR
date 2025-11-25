@@ -245,3 +245,27 @@ function sanitizeHtml(html) {
     tempHtml.textContent = html;
     return tempHtml.innerHTML;
 }
+
+function getInfoUser() {
+    let myHeaders = new Headers();
+    myHeaders.append("X-AUTH-TOKEN", getToken());
+
+    let requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch("http://127.0.0.1:8000/api/account/me", requestOptions)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.log("Erreur lors de la récupération des informations utilisateur.");
+            }
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(error => console.error('error user', error))
+}
