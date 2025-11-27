@@ -18,7 +18,6 @@ if (btnSingin) {
 // Vérification des identifiants
 // -----------------------------
 
-// Remplacer par un appel API réel en production.
 function checkCredentials() {
     let dataForm = new FormData(signinForm);
     let myHeaders = new Headers();
