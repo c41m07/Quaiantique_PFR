@@ -23,11 +23,12 @@ function validateForm() {
     let valid = true;
 
     // On récupère le résultat de chaque validateur et on l'agrège
-    const nameValid = nameEl ? validateRequired(nameEl) : true;
+    const nameValid = nameEl ? validateNameLike(nameEl) : true;
     valid = valid && nameValid;
 
-    const firstnameValid = firstnameEl ? validateRequired(firstnameEl) : true;
+    const firstnameValid = firstnameEl ? validateNameLike(firstnameEl) : true;
     valid = valid && firstnameValid;
+
 
     const emailValid = emailEl ? validateEmail(emailEl) : true;
     valid = valid && emailValid;
@@ -59,6 +60,23 @@ function validateRequired(input) {
         return false;
     }
 }
+
+// Valide le format d'un nom ou prénom
+function validateNameLike(input) {
+    if (!input) return false;
+    const value = input.value ? input.value.trim() : "";
+    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]{2,50}$/;
+    if (nameRegex.test(value)) {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        return true;
+    } else {
+        input.classList.add("is-invalid");
+        input.classList.remove("is-valid");
+        return false;
+    }
+}
+
 
 // Valide le format d'un email
 function validateEmail(input) {

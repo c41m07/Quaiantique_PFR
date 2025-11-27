@@ -1,7 +1,7 @@
 const galerieImage = document.getElementById("allimage");
 
 // Récupérer les informations des images
-let titre = "<img src=x onerror=\"window.location.replace('https://youtu.be/E4WlUXrJgy4')\"/>";
+let titre = "brunch";
 let imageSource = "../image/galery/brunch.jpg";
 
 let monImage = getImage(titre, imageSource);

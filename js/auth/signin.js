@@ -15,10 +15,9 @@ if (btnSingin) {
 }
 
 // -----------------------------
-// Vérification des identifiants (fonction de démonstration)
+// Vérification des identifiants
 // -----------------------------
 
-// Vérifie si les identifiants correspondent à un jeu de test.
 // Remplacer par un appel API réel en production.
 function checkCredentials() {
     let dataForm = new FormData(signinForm);
