@@ -26,8 +26,8 @@ jobs:
           username: quaiantiqueprffe
           password: ${{ secrets.ftp_password }}
 
-          protocol: ftps
-          port: 21
+          protocol: sftps
+          port: 22
           timeout: 60000
 
           server-dir: /www/
