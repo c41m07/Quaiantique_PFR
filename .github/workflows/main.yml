@@ -14,6 +14,9 @@ jobs:
         server: ftp-quaiantiqueprffe.alwaysdata.net
         username: quaiantiqueprffe
         password: ${{ secrets.ftp_password }}
+        protocol: ftps                     
+        port: 21                           
+        timeout: 60000                     
         server-dir: /www/
         exclude: |
           **/.git*
