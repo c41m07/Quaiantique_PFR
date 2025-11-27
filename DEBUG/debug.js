@@ -9,7 +9,6 @@
     const profiler = document.getElementById("debug-profiler");
     const clientBtn = document.getElementById("debug-set-client");
     const adminBtn = document.getElementById("debug-set-admin");
-    const debugActions = profiler.querySelector(".debug-actions");
 
     if (!roleEl || !statusEl || !profiler) return;
 
@@ -214,7 +213,6 @@
         });
         roleEl.textContent = state.role;
         statusEl.textContent = state.isAuth ? "connecté" : "déconnecté";
-        if (debugActions) debugActions.hidden = state.isAuth;
 
         const normalizedRole =
             state.role && state.role.toUpperCase ? state.role.toUpperCase() : "";
