@@ -9,39 +9,34 @@ jobs:
 
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v4   
+        uses: actions/checkout@v4
 
-      - name: 📂 Install dependencies
-          uses: actions/setup-node@v2
-          with:
-            node-version: '14'  
-          
-      - name: 📂 Install npm dependencies
+      - name: 📂 Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Install npm dependencies
         run: npm install
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6   
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ftp-quaiantiqueprffe.alwaysdata.net
           username: quaiantiqueprffe
           password: ${{ secrets.ftp_password }}
 
-          protocol: ftps          
+          protocol: ftps
           port: 21
           timeout: 60000
 
-          # dossier distant sur Alwaysdata (racine web)
           server-dir: /www/
-
-          # dossier local à déployer (ici la racine du repo)
           local-dir: ./
 
-          # pour debug si ça recasse encore (tu peux commenter après)
           log-level: verbose
 
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
-            **/DEBUG/**
             .github/**
