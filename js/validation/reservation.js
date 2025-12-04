@@ -7,6 +7,7 @@
     return;
   }
 
+  // Je récupère les éléments clés du formulaire de réservation pour surveiller les saisies.
   var form = document.querySelector("form.col-12.col-md-8.mx-auto");
   var NomInput = document.getElementById("NomInput");
   var PrenomInput = document.getElementById("PrenomInput");

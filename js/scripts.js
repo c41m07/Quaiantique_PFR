@@ -1,9 +1,12 @@
 // fichier : js/scripts.js
 
+// Je fournis un helper pour récupérer le client API exposé globalement.
+const getApiFetch = () => window.apifetch;
+
 // -----------------------------
 // Constantes et éléments DOM
 // -----------------------------
-// Constantes utilisées pour nommer les cookies
+// Je stocke ici les noms des cookies utilisés côté front.
 const tokenCookieName = "auth_token";
 const roleCookieName = "role";
 // Récupération du bouton de déconnexion dans le DOM (peut être absent)
@@ -197,6 +200,7 @@ function signOut() {
  * Exemples de valeurs pour data-show : "disconnected", "connected", "ROLE_ADMIN", "ROLE_USER".
  */
 
+// Je gère la logique centrale qui montre ou masque les éléments selon le rôle en cours.
 function showAndHideElementsForRoles() {
     const userConnected = isConnected();
     const role = getRole();
@@ -240,32 +244,28 @@ function showAndHideElementsForRoles() {
     hideSiteLoader();
 }
 
+// Je sécurise l’affichage HTML en échappant les données dynamiques.
 function sanitizeHtml(html) {
     const tempHtml = document.createElement('div');
     tempHtml.textContent = html;
     return tempHtml.innerHTML;
 }
 
+// Je fournis une méthode utilitaire pour interroger /account/me avec le token courant.
 function getInfoUser() {
-    let myHeaders = new Headers();
-    myHeaders.append("X-AUTH-TOKEN", getToken());
+    const token = getToken();
+    const api = getApiFetch();
+    if (!token || !api) {
+        console.warn('Tentative de récupération utilisateur sans token ou API client prêt');
+        return Promise.resolve(null);
+    }
 
-    let requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-
-    fetch("http://127.0.0.1:8000/api/account/me", requestOptions)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                console.log("Erreur lors de la récupération des informations utilisateur.");
-            }
-        })
-        .then(result => {
-            return result;
-        })
-        .catch(error => console.error('error user', error))
+    return api('/account/me', {
+        headers: {
+            'X-AUTH-TOKEN': token
+        }
+    }).catch((error) => {
+        console.error('Erreur lors de la récupération des informations utilisateur', error);
+        return null;
+    });
 }

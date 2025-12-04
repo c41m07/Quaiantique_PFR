@@ -3,8 +3,11 @@
 // -----------------------------
 import Route from "./Route.js";
 import {allRoutes, websiteName} from "./allRoutes.js";
+import './Route.js';
+import '../js/config.js';
+import '../js/apiClient.js';
 
-// Création d'une route pour la page 404 (page introuvable)
+// Je définis une route 404 utilisée comme fallback lorsque l’URL ne correspond à rien.
 const route404 = new Route(
     "404",
     "Page introuvable",
@@ -34,7 +37,7 @@ const getRouteByUrl = (url) => {
     }
 };
 const LoadContentPage = async () => {
-    // Affiche le loader global (fonctions définies dans js/scripts.js)
+    // Je m’assure de montrer le loader tant que la page n’est pas injectée.
     if (typeof showSiteLoader === "function") showSiteLoader();
 
     try {
@@ -42,7 +45,7 @@ const LoadContentPage = async () => {
         const actualRoute = getRouteByUrl(path) || route404;
         const allRolesArray = actualRoute.authorize;
 
-        // Si des règles d'accès sont définies
+        // Je contrôle ici les accès en fonction du rôle ou de l’état de connexion.
         if (allRolesArray.length > 0) {
             // cas spécial : page réservée aux "disconnected" (utilisateurs non connectés)
             if (allRolesArray.includes("disconnected")) {
@@ -62,7 +65,7 @@ const LoadContentPage = async () => {
             }
         }
 
-        // Récupération du contenu HTML de la route
+        // Je charge ensuite le HTML associé à la route et je l’injecte dans #main-page.
         const html = await fetch(actualRoute.pathHtml)
             .then((res) => res.text())
             .catch((err) => {
@@ -78,7 +81,7 @@ const LoadContentPage = async () => {
             document.querySelector("body").appendChild(scriptTag);
         }
 
-        // Ajout du script si nécessaire
+        // Je charge un script spécifique à la page si nécessaire (pathJS).
         if (actualRoute.pathJS !== "") {
             const scriptTag = document.createElement("script");
             scriptTag.type = "text/javascript";
@@ -129,11 +132,7 @@ const LoadContentPage = async () => {
     }
 };
 
-// -----------------------------
-// Gestion des événements de routage
-// -----------------------------
-
-// Fonction pour gérer les événements de routage (clic sur les liens)
+// Je gère ici la navigation côté client (pushState + interception des clics).
 const routeEvent = (event) => {
     event = event || window.event;
     event.preventDefault();

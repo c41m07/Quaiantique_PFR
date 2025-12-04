@@ -1,3 +1,4 @@
+// Je prépare ici un rendu simple pour la galerie en injectant dynamiquement le HTML d'une carte image.
 const galerieImage = document.getElementById("allimage");
 
 // Récupérer les informations des images

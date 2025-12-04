@@ -7,6 +7,7 @@ import Route from "./Route.js";
 export const allRoutes = [
     new Route("/", "Accueil", "/pages/home.html", []),
 
+    // Je configure la route galerie : HTML, validators, script métier.
     new Route(
         "/galerie",
         "La galerie",

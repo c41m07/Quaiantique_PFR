@@ -4,11 +4,7 @@
 // Bootstrap SCSS. Conserver les variables modifiables en haut.
 // -----------------------------
 
-// Custom.scss
-// Option A: Include all of Bootstrap
-
-// Include any default variable overrides here (though functions won’t be available)
-
+// Je définis ici la palette principale utilisée par les composants.
 $primary: #906427;
 $secondary: #b6ac97;
 $dark: #392c1e;
@@ -19,4 +15,4 @@ $font-family-serif: "Hind Madurai", serif !default;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
-// Then add additional custom code here
+// Je peux ajouter du code spécifique après avoir chargé Bootstrap.

@@ -1,3 +1,4 @@
+// Je centralise ici les helpers de validation pour pouvoir les réutiliser dans toutes les pages.
 // filepath: c:\Env\Workspace\Quaiantique_PFR\js\auth\validation.js
 // Utilitaires de validation partagés (extraits et adaptés depuis js/auth/signup.js)
 (function (window) {

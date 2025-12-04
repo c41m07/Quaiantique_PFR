@@ -8,6 +8,7 @@
 // -----------------------------
 // Layout global
 // -----------------------------
+// Je force le layout en colonne pour que le footer reste collé en bas.
 html,
 body {
   height: 100%;
@@ -35,6 +36,7 @@ html {
 // -----------------------------
 // Images et scènes
 // -----------------------------
+// Je limite les visuels pour éviter qu'ils débordent sur les petits écrans.
 img {
   max-width: 600px;
   max-height: 300px;
@@ -178,7 +180,7 @@ img {
 // -----------------------------
 // Loader global (Design demandé)
 // -----------------------------
-// Utilise la couleur principale ($primary) définie dans `_custom.scss` pour respecter la DA
+// Je reprends la charte et réutilise $primary pour l’animation de chargement.
 $loader-color: $primary !default;
 
 .site-loader {

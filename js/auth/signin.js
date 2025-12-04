@@ -3,59 +3,67 @@
 // -----------------------------
 console.log("Sign-in script loaded");
 
-// Récupération des éléments du formulaire (peuvent être absents selon la page)
-const mailInput = document.getElementById("EmailInput");
-const passwordInput = document.getElementById("PasswordInput");
-const btnSingin = document.getElementById("btnSignIn");
-const signinForm = document.getElementById("FormSignIn");
+(function () {
+    if (window.__signinScriptLoaded) {
+        console.debug('signin script already initialized');
+        return;
+    }
+    window.__signinScriptLoaded = true;
 
-// Ajout sécurisé de l'écouteur de clic sur le bouton de connexion
-if (btnSingin) {
-    btnSingin.addEventListener("click", checkCredentials);
-}
+    // Je récupère dynamiquement le client API pour soumettre le formulaire.
+    const getApiFetch = () => window.apifetch;
 
-// -----------------------------
-// Vérification des identifiants
-// -----------------------------
+    // Récupération des éléments du formulaire (peuvent être absents selon la page)
+    const mailInput = document.getElementById("EmailInput");
+    const passwordInput = document.getElementById("PasswordInput");
+    const btnSingin = document.getElementById("btnSignIn");
+    const signinForm = document.getElementById("FormSignIn");
 
-function checkCredentials() {
-    let dataForm = new FormData(signinForm);
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    // Ajout sécurisé de l'écouteur de clic sur le bouton de connexion
+    if (btnSingin) {
+        btnSingin.addEventListener("click", checkCredentials);
+    }
 
-    let raw = JSON.stringify({
-        "username": dataForm.get("Email"),
-        "password": dataForm.get("Password")
-    });
+    // -----------------------------
+    // Vérification des identifiants
+    // -----------------------------
 
-    let requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
+    async function checkCredentials() {
+        if (!signinForm) {
+            console.warn('Formulaire de connexion introuvable');
+            return;
+        }
 
-    fetch("http://127.0.0.1:8000/api/login", requestOptions)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                // connexion pas OK
-                if (mailInput) mailInput.classList.add("is-invalid");
-                if (passwordInput) passwordInput.classList.add("is-invalid");
+        const dataForm = new FormData(signinForm);
+        const payload = {
+            username: dataForm.get('Email'),
+            password: dataForm.get('Password')
+        };
+
+        try {
+            const api = getApiFetch();
+            if (!api) {
+                throw new Error('Client API indisponible');
             }
-        })
-        .then(result => {
-            if (result) {
-                // placer un vrai token
-                const token = result.apiToken;
-                setToken(token);
+            const result = await api('/api/security/login', {
+                method: 'POST',
+                body: payload
+            });
 
-                setCookie(roleCookieName, result.roles[0], 7);
-                window.location.href = "/account";
-
+            if (result?.apiToken) {
+                setToken(result.apiToken);
+                if (Array.isArray(result.roles) && result.roles[0]) {
+                    setCookie(roleCookieName, result.roles[0], 7);
+                }
+                window.location.href = '/account';
+                return;
             }
-        })
 
-        .catch(error => console.log('error', error));
-}
+            throw new Error('Réponse inattendue lors de la connexion');
+        } catch (error) {
+            console.error('Erreur de connexion', error);
+            if (mailInput) mailInput.classList.add('is-invalid');
+            if (passwordInput) passwordInput.classList.add('is-invalid');
+        }
+    }
+})();

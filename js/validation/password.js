@@ -2,11 +2,13 @@
 // Validation pour la page editpassword.html
 (function () {
   "use strict";
+  // Je m’assure que les helpers de validation sont disponibles avant de brancher les écouteurs.
   if (!window.QuaiValidation) {
     console.warn("QuaiValidation utilitaire non trouvé.");
     return;
   }
 
+  // Je surveille les deux champs de mot de passe pour fournir un feedback immédiat.
   var passwordInput = document.getElementById("PasswordInput");
   var confirmInput = document.getElementById("ValidatePasswordInput");
   var form = document.querySelector("form");

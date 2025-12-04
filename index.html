@@ -16,9 +16,11 @@
     <link href="scss/main.css" rel="stylesheet"/>
     <!-- DEBUG: stylesheet pour le profiler (facile à supprimer) -->
     <link href="./DEBUG/debug.css" rel="stylesheet"/>
+    <link rel="icon" type="image/x-icon" href="image/favicon.ico" />
     <title>Quai Antique</title>
 </head>
 <body class="layout">
+<!-- Je garde ce loader global accessible depuis js/scripts.js pour masquer l’application pendant les fetch. -->
 <!-- ----------------------------- -->
 <!-- Loader global -->
 <!-- ----------------------------- -->
@@ -86,7 +88,7 @@
 <!-- ----------------------------- -->
 <!-- Footer -->
 <!-- ----------------------------- -->
-<!-- DEBUG PROFILER START - facile à retirer -->
+<!-- Je place le profiler debug ici pour faciliter la vérification des rôles pendant le dev. -->
 <div aria-label="Debug profiler" class="debug-profiler" data-debug="true" id="debug-profiler" role="region"></div>
 <!-- DEBUG PROFILER END -->
 
@@ -111,6 +113,8 @@
     </div>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/apiClient.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
 <script src="js/validation.js"></script>

@@ -10,6 +10,7 @@
         return;
     }
 
+    // Je cible les champs principaux du formulaire de compte pour brancher les validations.
     var NomInput = document.getElementById("NomInput");
     var PrenomInput = document.getElementById("PrenomInput");
     var EmailInput = document.getElementById("EmailInput");
@@ -88,4 +89,3 @@
         });
     }
 })();
-

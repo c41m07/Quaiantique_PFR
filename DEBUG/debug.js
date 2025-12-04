@@ -12,6 +12,7 @@
 
     if (!roleEl || !statusEl || !profiler) return;
 
+    // Je scanne plusieurs noms de cookies pour trouver un éventuel token/role.
     const COOKIE_CANDIDATES = [
         "auth_token",
         "authToken",
@@ -27,6 +28,32 @@
     // cache pour /api/me et throttle
     let fetchCache = null;
     let lastFetchAt = 0;
+
+    async function tryFetchMe() {
+        if (!window.apifetch) {
+            return;
+        }
+        const now = Date.now();
+        if (now - lastFetchAt < 2000) {
+            return;
+        }
+        lastFetchAt = now;
+        try {
+            const token = getCookie(TOKEN_COOKIE);
+            if (!token) {
+                fetchCache = null;
+                return;
+            }
+            fetchCache = await window.apifetch('/account/me', {
+                headers: {
+                    'X-AUTH-TOKEN': token
+                }
+            });
+        } catch (error) {
+            console.warn('[DEBUG PROFILER] impossible de récupérer /account/me', error);
+            fetchCache = null;
+        }
+    }
 
     function getCookie(name) {
         const m = document.cookie.match(
@@ -53,7 +80,7 @@
         return null;
     }
 
-    // décode un JWT (payload) sans vérification
+    // Je décode les éventuels JWT pour extraire le rôle si possible.
     function parseJwt(token) {
         try {
             if (!token) return null;
@@ -223,7 +250,7 @@
         }
     }
 
-    // surcharge setItem pour détecter changements localStorage dans le même onglet
+    // Je surveille aussi les modifications de localStorage/cookies pour rafraîchir l’affichage.
     (function () {
         try {
             const origSet = Storage.prototype.setItem;

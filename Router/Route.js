@@ -2,6 +2,8 @@
 // Classe Route
 // -----------------------------
 
+// Je modélise une entrée de routage côté front pour savoir quel HTML et quels scripts charger.
+
 // Classe représentant une route du site
 // Propriétés :
 // - url: chemin de la route (ex: "/home")

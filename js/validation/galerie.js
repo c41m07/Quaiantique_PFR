@@ -7,6 +7,7 @@
     return;
   }
 
+  // Je factorise la logique de validation pour les modales d’ajout/édition d’images.
   function attachModal(
     modalId,
     titleInputId,
